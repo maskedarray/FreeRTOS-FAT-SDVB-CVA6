@@ -1,4 +1,6 @@
 # cva6-freertos
+# FAT Image:
+Fat image can be downloaded at https://uofwaterloo-my.sharepoint.com/:f:/g/personal/a26rahma_uwaterloo_ca/EvUvQNwfAQRMpAd1USZW6_MBaARXmp4b1YyQEq9RphtA6w?e=UaVlFt
 # Getting started
 
 To get more familiar with CVA6 architecture, a documentation is available:

@@ -114,10 +114,48 @@ extern const int my_fat_image_size;
 
 int main( void )
 {
-	prvSetupHardware();
-
+	uint32_t mhartid;
+	asm volatile (
+		"csrr %0, 0xF14\n"
+		: "=r" (mhartid)
+	);
 
 	__asm__ volatile( "csrw mtvec, %0" :: "r"( freertos_risc_v_trap_handler ) );
+	  
+	  
+	if (mhartid != 0) {
+
+		while (1) {
+			asm volatile ("interfering_cores:");
+			uint64_t readvar2;
+			volatile uint64_t *array2 = (uint64_t*)(uint64_t)(0x85000000 + (mhartid-1) * 0x01000000);
+			
+			// 32'd1048576/2 = 0x0010_0000/2 elements.
+			// Each array element is 64-bit, the array size is 0x0040_0000 = 4MB.
+			// This will always exhaust the 2MB LLC.
+			// Each core has 0x0100_0000 (16MB) memory.
+			// It will iterate over 4MB array from top address to down
+			#define LEN_NONCUA   32768 //256KB
+			// #define LEN_NONCUA   524288   //4MB
+			#define INTF_RD
+			for (int a_idx = 0; a_idx < LEN_NONCUA; a_idx +=8) {
+				#ifdef INTF_RD
+				asm volatile (
+					"ld   %0, 0(%1)\n"  // read addr_var data into read_var
+					: "=r"(readvar2)
+					: "r"(array2 - a_idx)
+				);
+				#elif defined(INTF_WR)
+				asm volatile (
+					"sd   %1, 0(%0)\n"  // read addr_var data into read_var
+					:: "r"(array2 - a_idx), "r"(readvar2)
+				);
+				#endif
+			} 
+		}
+	}
+	prvSetupHardware();
+
 	 
 
     // Use sprintf to format a string into the print_buffer

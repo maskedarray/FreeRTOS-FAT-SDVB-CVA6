@@ -44,8 +44,14 @@ _start:
 
 	// Primary hart
 	la sp, _stack_top
+	j load_data_sec
+
+_stack_multicore:
+	add  sp, a0, zero
+	sll  sp, sp, 17
 
 	// Load data section
+load_data_sec:
 	la a0, _data_lma
 	la a1, _data
 	la a2, _edata

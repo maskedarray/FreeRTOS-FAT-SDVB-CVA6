@@ -109,6 +109,8 @@ SECTIONS
 		. = ALIGN(16);
 		. += 2M;
 		_stack_top = .;
+		. += 1M;
+		_stack_top2 = .;
 	} 
 	. = 0x81000000;
 	. = ALIGN(16);
