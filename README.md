@@ -1,6 +1,9 @@
 # cva6-freertos
+Works with 64 bit cva6 core. Scheduler and Timer are tested to be working. Multicore support is added.
 # FAT Image:
-Fat image can be downloaded at https://uofwaterloo-my.sharepoint.com/:f:/g/personal/a26rahma_uwaterloo_ca/EvUvQNwfAQRMpAd1USZW6_MBaARXmp4b1YyQEq9RphtA6w?e=UaVlFt
+Place the FAT Image in the top directory. Fat image can be downloaded at https://uofwaterloo-my.sharepoint.com/:f:/g/personal/a26rahma_uwaterloo_ca/EvUvQNwfAQRMpAd1USZW6_MBaARXmp4b1YyQEq9RphtA6w?e=UaVlFt
+# Quick Start
+use `make clean` and `make` to build the project. The PATH environment variable should have the path to riscv64-unknown-elf-gcc bin file.
 # Getting started
 
 To get more familiar with CVA6 architecture, a documentation is available:
