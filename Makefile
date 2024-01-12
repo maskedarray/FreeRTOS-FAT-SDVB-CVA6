@@ -1,5 +1,7 @@
 RISCV_XLEN ?= 64
 RISCV_LIB  ?= elf
+BMARK ?= multi_ncut
+DSET ?= sim
 
 TARGET=riscv${RISCV_XLEN}-unknown-${RISCV_LIB}
 #-----------------------------------------------------------
@@ -40,6 +42,7 @@ CFLAGS = \
 	-fno-strict-aliasing \
 	-fno-builtin-printf \
 	-D__gracefulExit \
+	-Driscv \
 	-mcmodel=medany \
 	-static \
 	-DRISCV \
@@ -113,9 +116,19 @@ FREERTOS_SRC+=$(freertos_fat_dir)/portable/common/ff_ramdisk.c
 
 
 # source for sdvb benchmarks
-sdvb_disp_dir:=$(ROOT_DIR)/sdvb/disp
-FREERTOS_SRC+=$(wildcard $(sdvb_disp_dir)/*.c)
-INC_DIRS+=$(sdvb_disp_dir)
+# sdvb_disp_dir:=$(ROOT_DIR)/sdvb/disp
+# FREERTOS_SRC+=$(wildcard $(sdvb_disp_dir)/*.c)
+# INC_DIRS+=$(sdvb_disp_dir)
+
+
+#source for all vision benchmarks
+sdvb_bmark_dir:=$(ROOT_DIR)/vision/benchmarks/$(BMARK)/src/c
+FREERTOS_SRC+=$(wildcard $(sdvb_bmark_dir)/*.c)
+INC_DIRS+=$(sdvb_bmark_dir)
+
+sdvb_common_dir:=$(ROOT_DIR)/vision/common/c
+FREERTOS_SRC+=$(wildcard $(sdvb_common_dir)/*.c)
+INC_DIRS+=$(sdvb_common_dir)
 
 
 

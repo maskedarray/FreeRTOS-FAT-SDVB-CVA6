@@ -8,9 +8,18 @@
 #include <uart/uart.h>
 #include "stdio.h"
 #include <unistd.h>
-#include "disparity_top.h"
-#include "mser.h"
-#include "pca.h"
+// #include "disparity_top.h"
+// #include "mser_top.h"
+// #include "pca_top.h"
+// #include "sift_top.h"
+// #include "stitch_top.h"
+// #include "svm_top.h"
+// #include "localization_top.h"
+// #include "texture_synthesis_top.h"
+#include "multi_ncut_top.h"
+// #include "tracking_top.h"
+// #include "mser.h"
+// #include "pca.h"
 
 
 #define mainRAM_DISK_SECTOR_SIZE     512UL                                                    /* Currently fixed! */
@@ -176,13 +185,50 @@ int main( void )
 	DIRCommand("/ram/");
 	DIRCommand("/ram/disp");
 
-	benchmark_disp();
+	// benchmark_disp();
+	// char* arguments[] = {"script_disparity", "/ram/disp"};
+	// sdvb_disparity(2, arguments);
+
 	
 	DIRCommand("/ram/mser");
-	benchmark_mser();
+	// benchmark_mser();
+	// char* arguments[] = {"script_disparity", "/ram/mser"};
+	// sdvb_mser(2, arguments);
 
 	DIRCommand("/ram/pca");
-	benchmark_pca();
+	// benchmark_pca();
+	// char* arguments[] = {"script_disparity", "/ram/pca/sat.trn", "4435", "37", "R"};
+	// sdvb_pca(5, arguments);
+
+	DIRCommand("/ram/sift");
+	// char* arguments[] = {"script_disparity", "/ram/sift"};
+	// sdvb_sift(2, arguments);
+
+	DIRCommand("/ram/stitch");
+	// char* arguments[] = {"script_disparity", "/ram/stitch"};
+	// sdvb_stitch(2, arguments);
+
+	DIRCommand("/ram/svm");
+	// char* arguments[] = {"script_disparity", "/ram/svm"};
+	// sdvb_svm(2, arguments);
+
+	DIRCommand("/ram/loca");
+	// char* arguments[] = {"script_disparity", "/ram/loca"};
+	// sdvb_localization(2, arguments);
+
+	DIRCommand("/ram/text");
+	// char* arguments[] = {"script_disparity", "/ram/text"};
+	// sdvb_texture_synthesis(2, arguments);
+	
+
+	DIRCommand("/ram/multi");
+	char* arguments[] = {"script_disparity", "/ram/multi"};
+	sdvb_multi_ncut(2, arguments);
+
+	DIRCommand("/ram/tracking");
+	// char* arguments[] = {"script_disparity", "/ram/tracking"};
+	// sdvb_tracking(2, arguments);
+
 
 	uint8_t ucBuffer[ 50 ];
 

@@ -107,14 +107,14 @@ SECTIONS
 	.stack :
 	{
 		. = ALIGN(16);
-		. += 2M;
+		. += 12M;
 		_stack_top = .;
 		. += 1M;
 		_stack_top2 = .;
 	} 
-	. = 0x81000000;
+	. = 0x82000000;
 	. = ALIGN(16);
-	.my_image (NOLOAD): 
+	.my_image : 
 	{
         *(.my_image)
     } 

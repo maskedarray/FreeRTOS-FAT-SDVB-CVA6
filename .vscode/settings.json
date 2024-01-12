@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "disparity.h": "c",
+        "pca_top.h": "c"
+    }
+}
