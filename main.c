@@ -233,10 +233,10 @@ int main( void )
 	sdvb_sift(2, arguments);
 	#endif
 
-	#ifdef ___sift___
+	#ifdef ___stitch___
 	DIRCommand("/ram/stitch");
-	// char* arguments[] = {"script_disparity", "/ram/stitch"};
-	// sdvb_stitch(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/stitch"};
+	sdvb_stitch(2, arguments);
 	#endif
 	#ifdef ___svm___
 	DIRCommand("/ram/svm");
@@ -245,23 +245,23 @@ int main( void )
 	#endif
 	#ifdef ___localization___
 	DIRCommand("/ram/loca");
-	// char* arguments[] = {"script_disparity", "/ram/loca"};
-	// sdvb_localization(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/loca"};
+	sdvb_localization(2, arguments);
 	#endif
 	#ifdef ___texture_syntiesis___
 	DIRCommand("/ram/text");
-	// char* arguments[] = {"script_disparity", "/ram/text"};
-	// sdvb_texture_synthesis(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/text"};
+	sdvb_texture_synthesis(2, arguments);
 	#endif
 	#ifdef ___multi_ncut___
 	DIRCommand("/ram/multi");
-	// char* arguments[] = {"script_disparity", "/ram/multi"};
-	// sdvb_multi_ncut(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/multi"};
+	sdvb_multi_ncut(2, arguments);
 	#endif
 	#ifdef ___tracking___
 	DIRCommand("/ram/tracking");
-	// char* arguments[] = {"script_disparity", "/ram/tracking"};
-	// sdvb_tracking(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/tracking"};
+	sdvb_tracking(2, arguments);
 	#endif
 
 	uint8_t ucBuffer[ 50 ];
