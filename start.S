@@ -26,6 +26,9 @@
 
 #include "riscv-virt.h"
 
+.section .data
+cpu_count:  .word 0 
+
 	.section .init
 	.globl _start
 	.type _start,@function
@@ -37,18 +40,27 @@ _start:
 	la  gp, __global_pointer$
 .option pop
 
+
+
 	// Continue primary hart
 	csrr a0, mhartid
 	li   a1, PRIM_HART
-	bne  a0, a1, secondary
+	
 
 	// Primary hart
 	la sp, _stack_top
+	bne  a0, a1, _stack_multicore
 	j load_data_sec
 
 _stack_multicore:
-	add  sp, a0, zero
-	sll  sp, sp, 17
+#define STKSHIFT 17
+	//sll  a2, a0 , STKSHIFT
+	sll a2, a0, STKSHIFT
+	add sp, sp, a2
+	
+	bne  a0, a1, slave_thread
+	# add  sp, a0, zero
+	# sll  sp, sp, 17
 
 	// Load data section
 load_data_sec:
@@ -72,6 +84,7 @@ load_data_sec:
 	STOR zero, (a0)
 	addi a0, a0, REGSIZE
 	bltu a0, a1, 1b
+slave_thread:
 2:
 
 	// argc, argv, envp is 0

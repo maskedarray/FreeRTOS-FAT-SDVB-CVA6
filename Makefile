@@ -1,6 +1,7 @@
 RISCV_XLEN ?= 64
 RISCV_LIB  ?= elf
-BMARK ?= multi_ncut
+BMARK ?= disparity
+#
 DSET ?= sim
 
 TARGET=riscv${RISCV_XLEN}-unknown-${RISCV_LIB}
@@ -46,6 +47,7 @@ CFLAGS = \
 	-mcmodel=medany \
 	-static \
 	-DRISCV \
+	-D___$(BMARK)___\
 	-I $(FREERTOS_SOURCE_DIR)/portable/GCC/RISC-V/chip_specific_extensions/RISCV_MTIME_CLINT_no_extensions
 
 

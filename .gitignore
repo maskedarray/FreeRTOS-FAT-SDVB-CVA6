@@ -5,3 +5,7 @@
 build
 *.img
 
+.vscode/settings.json
+screenlog.0
+
+RTOSDemo.asm

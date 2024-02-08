@@ -8,18 +8,42 @@
 #include <uart/uart.h>
 #include "stdio.h"
 #include <unistd.h>
-// #include "disparity_top.h"
+#ifdef ___disparity___
+#include "disparity_top.h"
+#endif
+#ifdef ___mser___
 // #include "mser_top.h"
+#endif
+#ifdef ___pca___
 // #include "pca_top.h"
+#endif
+#ifdef ___sift___
 // #include "sift_top.h"
+#endif
+#ifdef ___stitch___
 // #include "stitch_top.h"
+#endif
+#ifdef ___svm___
 // #include "svm_top.h"
+#endif
+#ifdef ___localization___
 // #include "localization_top.h"
+#endif
+#ifdef ___texture_synthesis___
 // #include "texture_synthesis_top.h"
-#include "multi_ncut_top.h"
+#endif
+#ifdef ___multi_ncut___
+// #include "multi_ncut_top.h"
+#endif
+#ifdef ___tracking___
 // #include "tracking_top.h"
+#endif
+#ifdef ___mser___
 // #include "mser.h"
+#endif
+#ifdef ___pca___
 // #include "pca.h"
+#endif
 
 
 #define mainRAM_DISK_SECTOR_SIZE     512UL                                                    /* Currently fixed! */
@@ -135,7 +159,7 @@ int main( void )
 	if (mhartid != 0) {
 
 		while (1) {
-			asm volatile ("interfering_cores:");
+			
 			uint64_t readvar2;
 			volatile uint64_t *array2 = (uint64_t*)(uint64_t)(0x85000000 + (mhartid-1) * 0x01000000);
 			
@@ -147,6 +171,7 @@ int main( void )
 			#define LEN_NONCUA   32768 //256KB
 			// #define LEN_NONCUA   524288   //4MB
 			#define INTF_RD
+			asm volatile ("interfering_cores:");
 			for (int a_idx = 0; a_idx < LEN_NONCUA; a_idx +=8) {
 				#ifdef INTF_RD
 				asm volatile (
@@ -163,7 +188,7 @@ int main( void )
 			} 
 		}
 	}
-	prvSetupHardware();
+	prvSetupHardware();			// UART INITIALIZATION
 
 	 
 
@@ -183,52 +208,61 @@ int main( void )
     pxDisk = FF_RAMDiskInit2( mainRAM_DISK_NAME, &my_fat_image_start, 102400, mainIO_MANAGER_CACHE_SIZE );
 	FF_RAMDiskShowPartition(pxDisk);
 	DIRCommand("/ram/");
+
+	#ifdef ___disparity___
 	DIRCommand("/ram/disp");
+	char* arguments[] = {"script_disparity", "/ram/disp"};
+	sdvb_disparity(2, arguments);
+	#endif
 
-	// benchmark_disp();
-	// char* arguments[] = {"script_disparity", "/ram/disp"};
-	// sdvb_disparity(2, arguments);
-
-	
+	#ifdef ___mser___
 	DIRCommand("/ram/mser");
-	// benchmark_mser();
-	// char* arguments[] = {"script_disparity", "/ram/mser"};
-	// sdvb_mser(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/mser"};
+	sdvb_mser(2, arguments);
+	#endif
 
+	#ifdef ___pca___
 	DIRCommand("/ram/pca");
-	// benchmark_pca();
-	// char* arguments[] = {"script_disparity", "/ram/pca/sat.trn", "4435", "37", "R"};
-	// sdvb_pca(5, arguments);
+	char* arguments[] = {"script_disparity", "/ram/pca/sat.trn", "4435", "37", "R"};
+	sdvb_pca(5, arguments);
+	#endif
 
+	#ifdef ___sift___
 	DIRCommand("/ram/sift");
-	// char* arguments[] = {"script_disparity", "/ram/sift"};
-	// sdvb_sift(2, arguments);
+	char* arguments[] = {"script_disparity", "/ram/sift"};
+	sdvb_sift(2, arguments);
+	#endif
 
+	#ifdef ___sift___
 	DIRCommand("/ram/stitch");
 	// char* arguments[] = {"script_disparity", "/ram/stitch"};
 	// sdvb_stitch(2, arguments);
-
+	#endif
+	#ifdef ___svm___
 	DIRCommand("/ram/svm");
-	// char* arguments[] = {"script_disparity", "/ram/svm"};
-	// sdvb_svm(2, arguments);
-
+	char* arguments[] = {"script_disparity", "/ram/svm"};
+	sdvb_svm(2, arguments);
+	#endif
+	#ifdef ___localization___
 	DIRCommand("/ram/loca");
 	// char* arguments[] = {"script_disparity", "/ram/loca"};
 	// sdvb_localization(2, arguments);
-
+	#endif
+	#ifdef ___texture_syntiesis___
 	DIRCommand("/ram/text");
 	// char* arguments[] = {"script_disparity", "/ram/text"};
 	// sdvb_texture_synthesis(2, arguments);
-	
-
+	#endif
+	#ifdef ___multi_ncut___
 	DIRCommand("/ram/multi");
-	char* arguments[] = {"script_disparity", "/ram/multi"};
-	sdvb_multi_ncut(2, arguments);
-
+	// char* arguments[] = {"script_disparity", "/ram/multi"};
+	// sdvb_multi_ncut(2, arguments);
+	#endif
+	#ifdef ___tracking___
 	DIRCommand("/ram/tracking");
 	// char* arguments[] = {"script_disparity", "/ram/tracking"};
 	// sdvb_tracking(2, arguments);
-
+	#endif
 
 	uint8_t ucBuffer[ 50 ];
 
