@@ -6,7 +6,7 @@ Author: Sravanthi Kota Venkata
 #include <stdlib.h>
 #include "svm.h"
 #include "svm_top.h"
-
+#define sim
 int sdvb_svm(int argc, char* argv[])
 {
     int iter, N, Ntst, i, j, k, n;

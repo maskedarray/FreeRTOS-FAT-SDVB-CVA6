@@ -248,7 +248,7 @@ int main( void )
 	char* arguments[] = {"script_disparity", "/ram/loca"};
 	sdvb_localization(2, arguments);
 	#endif
-	#ifdef ___texture_syntiesis___
+	#ifdef ___texture_synthesis___
 	DIRCommand("/ram/text");
 	char* arguments[] = {"script_disparity", "/ram/text"};
 	sdvb_texture_synthesis(2, arguments);
