@@ -64,7 +64,7 @@ LIBS	 = -L$(RISCV_CCPATH)/lib/gcc/$(TARGET)/$(GCCVER) \
 		   -lgcc
 
 
-DEBUG = 1
+DEBUG = 0
 ifeq ($(DEBUG), 1)
     CFLAGS += -O0 -ggdb3
 else
